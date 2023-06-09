@@ -1,0 +1,26 @@
+.completeHover:hover {
+    cursor: pointer;
+    color: rgb(6, 139, 6);
+}
+
+.deleteHover:hover {
+    cursor: pointer;
+    color: rgb(255, 62, 62);
+}
+
+.editPencil {
+    font-weight: bold;
+    color: #2cb61a;
+}
+
+.editHover:hover {
+    cursor: pointer;
+    color: rgb(0, 60, 255);
+}
+
+.completed {
+    text-decoration: line-through;
+    background-color: #75fc64;
+    background-image: linear-gradient(45deg, #75fc64 0%, #f3fe76 100%);
+    
+}
