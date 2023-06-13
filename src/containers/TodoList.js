@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
-import { CreateTodoButton } from "../components/CreateTodoButton"
-import { TodoCounter } from "../components/TodoCounter"
-import { TodoItem } from "../components/TodoItem"
-import { TodoSearch } from "../components/TodoSearch"
+import { CreateTodoButton } from "../components/createTodoButton/createTodoButton"
+import { TodoCounter } from "../components/todoCounter/todoCounter"
+import { TodoItem } from "../components/todoItem/todoItem"
+import { TodoSearch } from "../components/todoSearch/todoSearch"
+
 
 
 function TodoList() {
-    const [todos, setTodos] = useState([]);
+    const localStorageTodos = localStorage.getItem('TODOS_V1')
+    let parsedTodos;
+    if(!localStorageTodos) {
+        localStorage.setItem('TODOS_V1', JSON.stringify([]));
+        parsedTodos = [];
+    } else {
+        parsedTodos = JSON.parse(localStorageTodos);
+    }
+
+    const [todos, setTodos] = useState(parsedTodos);
     const [contador, setContador] = useState(1);
     const [id, setId] = useState();
     const [isEdit, setIsEdit] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [value, setValue] = useState("");
-    const [filteredTodos, setFilteredTodos] = useState([]);
+    const [filteredTodos, setFilteredTodos] = useState(parsedTodos);
 
 
     const searchedTodos = filteredTodos.filter(
@@ -23,13 +33,18 @@ function TodoList() {
         }
     )
 
+    const saveTodos = (newTodos) => {
+        localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
+        setTodos(newTodos)
+    }
+
     const addTodo = (text) => {
         const newTodo = {
             identificador: contador,
             text,
             completed: false
         }
-        setTodos([...todos, newTodo]);
+        saveTodos([...todos, newTodo]);
         setFilteredTodos([...todos, newTodo])
         setContador(contador + 1);
     }
@@ -40,12 +55,14 @@ function TodoList() {
     const completeTodo = (index) => {
         const newTodos = [...todos];
         newTodos[index].completed = !newTodos[index].completed;
+        saveTodos(newTodos);
         setFilteredTodos(newTodos);
     };
 
     const deleteTodo = (index) => {
         const newTodos = [...todos];
         newTodos.splice(index, 1); 
+        saveTodos(newTodos)
         setFilteredTodos(newTodos);
     };
 
@@ -73,7 +90,7 @@ function TodoList() {
     const ActualizarTarea = (event, index) => {
         const newTodos = [...todos];
         newTodos[index].text = event.target.value;
-        setTodos(newTodos);
+        saveTodos(newTodos);
     }
 
     const inputTextNewTodo = (event) => {
@@ -84,7 +101,7 @@ function TodoList() {
 
     return (
         <>
-            <TodoCounter 
+            <TodoCounter
                 total={totalTodos} 
                 completed={completedTodos}
             />
