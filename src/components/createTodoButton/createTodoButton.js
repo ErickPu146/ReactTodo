@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Plus } from 'react-bootstrap-icons';
 
 
-function CreateTodoButton({ addTodo, inputTextNewTodo, value, setValue }) {
+function CreateTodoButton({ addTodo, textNewTodo, setTextNewTodo }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -23,31 +23,38 @@ function CreateTodoButton({ addTodo, inputTextNewTodo, value, setValue }) {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                <Modal.Title>Crear nueva tarea</Modal.Title>
+                    <Modal.Title>Crear nueva tarea</Modal.Title>
                 </Modal.Header>
+
                 <Modal.Body>
                     <input 
                         className="form-control" 
                         placeholder="Descripcion de la tarea"
-                        onChange={(event) => inputTextNewTodo(event)}
+                        onChange={(event) => setTextNewTodo(event.target.value)}
                     />
                 </Modal.Body>
+
                 <Modal.Footer>
-                <Button variant="secondary" onClick={()=> {
-                    handleClose()
-                    setValue("")
-                }}>
-                    Cerrar
-                </Button>
-                <Button variant="primary" onClick={() => {
-                    handleClose()
-                    if(value.trim() != '') {
-                        addTodo(value)
-                        setValue("")
-                    }
-                }}>
-                    Crear
-                </Button>
+                    <Button 
+                        variant="secondary"
+                        onClick={()=> {
+                            handleClose();
+                            setTextNewTodo("");
+                        }}
+                    >
+                        Cerrar
+                    </Button>
+                    <Button 
+                        variant="primary" 
+                        onClick={() => {
+                        if(textNewTodo.trim() != '') {
+                            setTextNewTodo("");
+                            addTodo(textNewTodo);
+                        };
+                        handleClose();
+                    }}>
+                        Crear
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>

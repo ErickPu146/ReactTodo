@@ -7,23 +7,25 @@ import { TodoSearch } from "../components/todoSearch/todoSearch"
 
 
 function TodoList() {
-    const localStorageTodos = localStorage.getItem('TODOS_V1')
+    const localStorageTodos = localStorage.getItem('TODOS_V1');
     let parsedTodos;
-    if(!localStorageTodos) {
+
+    if (!localStorageTodos) {
         localStorage.setItem('TODOS_V1', JSON.stringify([]));
         parsedTodos = [];
     } else {
         parsedTodos = JSON.parse(localStorageTodos);
+        console.log(parsedTodos);
     }
 
+
     const [todos, setTodos] = useState(parsedTodos);
+    const [filteredTodos, setFilteredTodos] = useState(parsedTodos);
+    const [searchValue, setSearchValue] = useState('');
     const [contador, setContador] = useState(1);
     const [id, setId] = useState();
     const [isEdit, setIsEdit] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
-    const [value, setValue] = useState("");
-    const [filteredTodos, setFilteredTodos] = useState(parsedTodos);
-
+    const [textNewTodo, setTextNewTodo] = useState("");
 
     const searchedTodos = filteredTodos.filter(
         (todo) => {
@@ -33,15 +35,16 @@ function TodoList() {
         }
     )
 
+
     const saveTodos = (newTodos) => {
         localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
         setTodos(newTodos)
     }
 
-    const addTodo = (text) => {
+    const addTodo = (textForNewTodo) => {
         const newTodo = {
             identificador: contador,
-            text,
+            text: textForNewTodo,
             completed: false
         }
         saveTodos([...todos, newTodo]);
@@ -93,12 +96,6 @@ function TodoList() {
         saveTodos(newTodos);
     }
 
-    const inputTextNewTodo = (event) => {
-        setValue(event.target.value);
-    }
-
-
-
     return (
         <>
             <TodoCounter
@@ -127,10 +124,9 @@ function TodoList() {
                 ))}
             </ul>
             <CreateTodoButton 
-                value={value}
-                inputTextNewTodo={inputTextNewTodo}
+                textNewTodo={textNewTodo}
                 addTodo={addTodo}
-                setValue={setValue}
+                setTextNewTodo={setTextNewTodo}
             />
         </>
 
