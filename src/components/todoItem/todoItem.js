@@ -5,7 +5,7 @@ import { PencilSquare } from 'react-bootstrap-icons';
 import './TodoItem.css';
 import { Form } from 'react-bootstrap';
 
-function TodoItem({ item, text, completed, onComplete, onDelete, identificador, index, ActualizarTarea, isEdit, EnabledIsEdit }) {
+function TodoItem({ item, text, completed, completeTodo, deleteTodo, identificador, index, ActualizarTarea, isEdit, EnabledIsEdit }) {
 
   return (
     <li 
@@ -14,19 +14,19 @@ function TodoItem({ item, text, completed, onComplete, onDelete, identificador, 
     >
       <div className='w-25 d-flex -justify-content-start'>
         <CheckCircleFill 
-          onClick={() => onComplete(index)} 
+          onClick={() => completeTodo(index)} 
           className="completeHover" 
         />
       </div>
 
       <div className='w-50 d-flex-justify-content-center'>
-        <div
-          className={!(identificador === item.identificador) ? 'd-block' : 'd-none'}
-        >
-          {(item.text)}
-        </div>
+      <div
+        className={!(identificador === item.identificador) ? 'd-block' : 'd-none'}
+      >
+        {(item.text)}
+      </div>
         <Form.Control 
-          className={(identificador === item.identificador) & isEdit ? 'd-block w-100' : 'd-none'}
+          className={(identificador === item.identificador) & isEdit ? 'd-block' : 'd-none'}
           value={item.text} 
           as="textarea" 
           rows="3" 
@@ -41,7 +41,7 @@ function TodoItem({ item, text, completed, onComplete, onDelete, identificador, 
           onClick={() => EnabledIsEdit(item.identificador)}
         />
         <TrashFill 
-          onClick={() => onDelete(index)}
+          onClick={() => deleteTodo(index)}
           className="fs-5 deleteHover" 
         />
       </div>

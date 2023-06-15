@@ -9,20 +9,22 @@ import { TodoSearch } from "../components/todoSearch/todoSearch"
 function TodoList() {
     const localStorageTodos = localStorage.getItem('TODOS_V1');
     let parsedTodos;
+    let counterLocalTodos;
 
     if (!localStorageTodos) {
         localStorage.setItem('TODOS_V1', JSON.stringify([]));
         parsedTodos = [];
+        counterLocalTodos = 0
     } else {
         parsedTodos = JSON.parse(localStorageTodos);
-        console.log(parsedTodos);
+        counterLocalTodos = parsedTodos.length;
     }
 
 
     const [todos, setTodos] = useState(parsedTodos);
     const [filteredTodos, setFilteredTodos] = useState(parsedTodos);
     const [searchValue, setSearchValue] = useState('');
-    const [contador, setContador] = useState(1);
+    const [contador, setContador] = useState(counterLocalTodos);
     const [id, setId] = useState();
     const [isEdit, setIsEdit] = useState(false);
     const [textNewTodo, setTextNewTodo] = useState("");
@@ -37,8 +39,10 @@ function TodoList() {
 
 
     const saveTodos = (newTodos) => {
+        console.log(newTodos)
         localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
         setTodos(newTodos)
+        setFilteredTodos(newTodos);
     }
 
     const addTodo = (textForNewTodo) => {
@@ -47,9 +51,8 @@ function TodoList() {
             text: textForNewTodo,
             completed: false
         }
+        setContador(todos.length + 1);
         saveTodos([...todos, newTodo]);
-        setFilteredTodos([...todos, newTodo])
-        setContador(contador + 1);
     }
 
     const completedTodos = todos.filter(todo => !! todo.completed).length;
@@ -59,29 +62,44 @@ function TodoList() {
         const newTodos = [...todos];
         newTodos[index].completed = !newTodos[index].completed;
         saveTodos(newTodos);
-        setFilteredTodos(newTodos);
     };
 
     const deleteTodo = (index) => {
         const newTodos = [...todos];
-        newTodos.splice(index, 1); 
-        saveTodos(newTodos)
-        setFilteredTodos(newTodos);
+
+        if(index == todos.length - 1) {
+            newTodos.splice(index, 1);
+            setContador(contador - 1);
+            saveTodos(newTodos)
+        } else {
+            newTodos.splice(index, 1);
+
+            for(let i = index; i <= newTodos.length - 1; i++) {
+                newTodos[i].identificador = newTodos[i].identificador - 1;
+            }
+            setContador(contador - 1);
+            saveTodos(newTodos)
+        }
+
     };
 
     const filterSelect = (value) => {
         if (value === 'all') {
             setFilteredTodos(todos);
+            setSearchValue('')
           } else if (value === 'pending') {
             const pendingTodos = todos.filter(todo => !todo.completed);
             setFilteredTodos(pendingTodos);
+            setSearchValue('')
           } else if (value === 'completed') {
             const completedTodos = todos.filter(todo => todo.completed);
             setFilteredTodos(completedTodos);
+            setSearchValue('')
           }
     };
 
     const EnabledIsEdit = (id) => {
+        console.log(id)
         if(isEdit){
             setId("")
         }else{
@@ -115,8 +133,8 @@ function TodoList() {
                         identificador={id} 
                         item={todo}
                         completed={todo.completed}
-                        onComplete={completeTodo}
-                        onDelete={deleteTodo}
+                        completeTodo={completeTodo}
+                        deleteTodo={deleteTodo}
                         isEdit={isEdit}
                         EnabledIsEdit={EnabledIsEdit}
                         ActualizarTarea={ActualizarTarea}
