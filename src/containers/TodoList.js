@@ -99,7 +99,6 @@ function TodoList() {
     };
 
     const EnabledIsEdit = (id) => {
-        console.log(id)
         if(isEdit){
             setId("")
         }else{

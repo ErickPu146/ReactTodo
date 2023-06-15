@@ -10,7 +10,9 @@ function TodoItem({ item, text, completed, completeTodo, deleteTodo, identificad
   return (
     <li 
       key={index + 100}
-      className={`${completed ? 'completed' : 'bg-light'} shadow rounded-5 p-4 d-flex justify-content-between align-items-center w-100`}
+      className={`${completed ? 'completed' : 'bg-light'} ${item.toEdit ? 'shadow-info' : 'shadow'}
+      rounded-5 py-4 px-md-4 d-flex justify-content-between align-items-center`}
+
     >
       <div className='w-25 d-flex -justify-content-start'>
         <CheckCircleFill 
@@ -35,10 +37,12 @@ function TodoItem({ item, text, completed, completeTodo, deleteTodo, identificad
         />
       </div>
 
-      <div className={`${isEdit ? 'justify-content-between' : 'justify-content-end'} d-flex gap-2 w-25`}>
+      <div className={`${isEdit ? 'justify-content-between' : 'justify-content-end'} d-flex gap-1 gap-md-3 w-25`}>
         <PencilSquare 
           className={`${isEdit ? 'editPencil shadow' : ''} fs-5 editHover`} 
-          onClick={() => EnabledIsEdit(item.identificador)}
+          onClick={() => { 
+            EnabledIsEdit(item.identificador)
+          }}
         />
         <TrashFill 
           onClick={() => deleteTodo(index)}
