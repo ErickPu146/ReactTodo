@@ -1,0 +1,31 @@
+.completeHover:hover {
+    cursor: pointer;
+    color: rgb(6, 139, 6);
+}
+
+.deleteHover:hover {
+    cursor: pointer;
+    color: rgb(255, 62, 62);
+}
+
+.shadow-info {
+    box-shadow: 0px 5px 25px rgb(9, 120, 156);
+}
+
+.completeEdit {
+    font-weight: bold;
+    color: rgb(0, 60, 255);
+}
+.completeEdit:hover {
+    color: #2cb61a;
+}
+
+.editHover:hover {
+    cursor: pointer;
+    color: rgb(0, 60, 255);
+}
+
+.completed {
+    text-decoration: line-through;
+    background-color: #BFDB38;
+}

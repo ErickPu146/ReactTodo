@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { TodoList } from './containers/TodoList';
+import React from 'react';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container-fluid'>
+      <div className='container mt-5 text-center d-flex flex-column justify-content-center gap-4 align-items-center'>
+        <TodoList>
+
+        </TodoList>
+      </div>
     </div>
   );
 }
 
-export default App;
+
+
+export { App };
