@@ -1,5 +1,12 @@
-function TodoSearch({searchValue, setSearchValue, filterSelect}) {
+import { useContext } from "react"
+import { TodoContext } from "../../TodoContext"
 
+function TodoSearch() {
+    const {
+        searchValue,
+        setSearchValue,
+        filterSelect,
+    } = useContext(TodoContext)
     return (
         <div className='w-100 row justify-content-center gap-1 gap-md-0'>
             <div className="col-12 col-md-9">

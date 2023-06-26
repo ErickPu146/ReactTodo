@@ -1,11 +1,17 @@
-import './CreateTodoButton.css'
+import './style.css'
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Plus } from 'react-bootstrap-icons';
+import { TodoContext } from '../../TodoContext';
 
-
-function CreateTodoButton({ addTodo, textNewTodo, setTextNewTodo }) {
+function CreateTodoButton() {
+    const {
+        addTodo,
+        textNewTodo,
+        setTextNewTodo,
+    } = useContext(TodoContext);
+    
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

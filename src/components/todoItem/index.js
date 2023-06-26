@@ -2,10 +2,10 @@ import React from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
 import { TrashFill } from 'react-bootstrap-icons';
 import { PencilSquare } from 'react-bootstrap-icons';
-import './TodoItem.css';
+import './style.css';
 import { Form } from 'react-bootstrap';
 
-function TodoItem({ item, text, completed, completeTodo, deleteTodo, identificador, index, ActualizarTarea, isEdit, EnabledIsEdit }) {
+function TodoItem({ item, completed, completeTodo, deleteTodo, identificador, index, ActualizarTarea, isEdit, EnabledIsEdit }) {
 
   return (
     <li 
