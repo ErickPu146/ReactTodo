@@ -1,17 +1,16 @@
 import { useContext } from "react";
 import { TodoItem } from "../../components/todoItem"
 import { TodoContext } from "../../TodoContext";
+import { TodosLoading } from "../../components/todosLoading";
 
 function TodoList() {
 
     const {
         searchedTodos,
-        id,
         completeTodo,
         deleteTodo,
-        isEdit,
         EnabledIsEdit,
-        ActualizarTarea,
+        editTodo,
         loading,
         error,
     } = useContext(TodoContext);
@@ -19,27 +18,31 @@ function TodoList() {
     return (
         
         <>
-            {loading ? <p>Estamos cargando...</p> : null}
+            {loading ? 
+            <>
+                <TodosLoading/> 
+                <TodosLoading/> 
+                <TodosLoading/> 
+            </>
+            : null}
             {error ? <p>Desesperate, hubo un error!!!!!!</p> : null} 
 
             
 
-            <ul className="list-unstyled row gap-3 w-100">
+            {   <ul className="list-unstyled row gap-3 w-100">
                 {searchedTodos.map((todo, index) => (
                     <TodoItem 
                         key={index}
                         index={index}
-                        identificador={id} 
+                        identificador={todo.id} 
                         item={todo}
-                        completed={todo.completed}
                         completeTodo={completeTodo}
                         deleteTodo={deleteTodo}
-                        isEdit={isEdit}
                         EnabledIsEdit={EnabledIsEdit}
-                        ActualizarTarea={ActualizarTarea}
+                        editTodo={editTodo}
                     />
                 ))}
-            </ul>
+            </ul>}
         </>
 
     )

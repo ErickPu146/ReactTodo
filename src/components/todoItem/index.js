@@ -5,47 +5,47 @@ import { PencilSquare } from 'react-bootstrap-icons';
 import './style.css';
 import { Form } from 'react-bootstrap';
 
-function TodoItem({ item, completed, completeTodo, deleteTodo, identificador, index, ActualizarTarea, isEdit, EnabledIsEdit }) {
+function TodoItem({ item, completeTodo, deleteTodo, index, editTodo, EnabledIsEdit }) {
 
   return (
     <li 
       key={index + 100}
-      className={`${completed ? 'completed' : 'bg-light'} ${item.toEdit ? 'shadow-info' : 'shadow'}
+      className={`${item.completed ? 'completed' : 'bg-light'}
       rounded-5 py-4 px-md-4 d-flex justify-content-between align-items-center`}
 
     >
       <div className='w-25 d-flex -justify-content-start'>
         <CheckCircleFill 
-          onClick={() => completeTodo(item.identificador)} 
+          onClick={() => completeTodo(item.id)} 
           className="completeHover" 
         />
       </div>
 
       <div className='w-50 d-flex-justify-content-center'>
       <div
-        className={!(identificador === item.identificador) ? 'd-block' : 'd-none'}
+        className={item.toEdit ? 'd-none' : 'd-block'}
       >
         {(item.text)}
       </div>
         <Form.Control 
-          className={(identificador === item.identificador) & isEdit ? 'd-block' : 'd-none'}
+          className={item.toEdit ? 'd-block' : 'd-none'}
           value={item.text} 
           as="textarea" 
           rows="3" 
           name="description" 
-          onChange={(event) => ActualizarTarea(event, item.identificador)}
+          onChange={(event) => editTodo(event, item.id)}
         />
       </div>
 
-      <div className={`${isEdit ? 'justify-content-between' : 'justify-content-end'} d-flex gap-1 gap-md-3 w-25`}>
+      <div className={`${item.toEdit  ? 'justify-content-between' : 'justify-content-end'} d-flex gap-1 gap-md-3 w-25`}>
         <PencilSquare 
-          className={`${isEdit ? 'editPencil shadow' : ''} fs-5 editHover`} 
+          className={`${item.toEdit  ? 'editPencil shadow' : ''} fs-5 editHover`} 
           onClick={() => { 
-            EnabledIsEdit(item.identificador)
+            EnabledIsEdit(item.id)
           }}
         />
         <TrashFill 
-          onClick={() => deleteTodo(item.identificador)}
+          onClick={() => deleteTodo(item.id)}
           className="fs-5 deleteHover" 
         />
       </div>
